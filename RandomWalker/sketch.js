@@ -1,14 +1,11 @@
-// let x;
-// let y;
+
 let pos;
 let prev;
 
 function setup() {
-  createCanvas(400, 400);
-  background(230);
-  x = 200;
-  y = 200;
-  pos = createVector(200, 200);
+  createCanvas(640 , 320);
+  background(255);
+  pos = createVector(300, 200);
   prev = pos.copy();
 }
 
