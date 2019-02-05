@@ -1,20 +1,52 @@
-
-let pos;
-let prev;
+var particles = [];
 
 function setup() {
-  createCanvas(640 , 320);
+  createCanvas(640, 320);
+  frameRate(30);
   background(255);
-  pos = createVector(300, 200);
-  prev = pos.copy();
+}
+
+function mousePressed() {
+  particles.push(new Particle(mouseX, mouseY));
+  stroke(random(255));
 }
 
 function draw() {
-  stroke(0, random(20, 60));
-  strokeWeight(2);
-  line(pos.x, pos.y, prev.x, prev.y);
+  for (var i = 0; i < particles.length; i++) {
+    particles[i].update();
+    particles[i].show();
+  }
+}
 
-  let step = p5.Vector.random2D();
-  step.mult(5);
-  pos.add(step);
+class Particle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.history = [];
+  }
+
+  update() {
+    this.x += random(-5, 5);
+    this.y += random(-5, 5);
+
+    for (var i = 0; i < this.history.length; i++) {
+      this.history[i].x += random(-2, 2);
+      this.history[i].y += random(-2, 2);
+    }
+    var v = createVector(this.x, this.y);
+    this.history.push(v);
+    if (this.history.length > 100) {
+      this.history.splice(0, 1);
+    }
+  }
+  show() {
+    let pSize1 = 0;
+    pSize1 += random(-20, 20);
+    let pSize2 = 0;
+    pSize2 += random(-30, 30);
+    stroke(0, 30);
+    noFill();
+    ellipse(this.x, this.y, pSize1, pSize1);
+    ellipse(this.x, this.y, pSize2, pSize2);
+  }
 }
